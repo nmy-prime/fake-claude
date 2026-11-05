@@ -42,6 +42,22 @@ export DEEPSEEK_API_KEY=sk-xxxxxxxx
 
 ### 2. 运行
 
+先准备本地密钥文件 `.env`（已被 `.gitignore` 忽略，不会提交）：
+
+```cmd
+copy .env.example .env
+```
+
+把 `DEEPSEEK_API_KEY` 和 `GITHUB_PERSONAL_ACCESS_TOKEN` 填进去，然后用脚本启动：
+
+```cmd
+run-local.cmd
+```
+
+`run-local.cmd` 会读取 `.env` 注入环境变量，再执行 `mvnw.cmd spring-boot:run`。
+
+也可以自己先设好环境变量，然后直接运行：
+
 ```bash
 ./mvnw spring-boot:run
 ```
@@ -117,21 +133,22 @@ fake-claude/
 
 ## MCP 配置
 
-编辑 `src/main/resources/mcp/mcp-servers-config.json`，把 token 换成自己的：
+`src/main/resources/mcp/mcp-servers-config.json` 里**不放任何密钥**，token 通过环境变量透传：
 
 ```json
 {
   "mcpServers": {
     "github": {
       "command": "docker",
-      "args": ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "mcp/github"],
-      "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "your_token" }
+      "args": ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "mcp/github"]
     }
   }
 }
 ```
 
-> ⚠️ 这个文件会被提交到仓库。请勿把真实 token 写进去——改用环境变量或本机未跟踪的配置覆盖。
+`args` 中的 `-e GITHUB_PERSONAL_ACCESS_TOKEN`（不带值）表示把宿主机的同名环境变量传进容器，因此只需在 `.env` 或环境变量里设置 `GITHUB_PERSONAL_ACCESS_TOKEN`。
+
+> ⚠️ 不要在 JSON 里加 `"env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "..." }`：那会覆盖宿主机变量，并把密钥写进会被提交的文件。
 
 ## 免责声明
 
