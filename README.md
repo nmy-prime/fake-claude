@@ -79,15 +79,14 @@ java -jar target/fake-claude-0.0.1-SNAPSHOT.jar
 
 配置文件：`src/main/resources/application.properties`
 
-| 配置项 | 默认值 | 说明 |
-| --- | --- | --- |
-| `spring.ai.deepseek.api-key` | `${DEEPSEEK_API_KEY}` | API Key，走环境变量 |
-| `spring.ai.deepseek.chat.options.model` | `deepseek-flash` | 使用的模型 |
-| `spring.ai.deepseek.chat.options.temperature` | `0.7` | 采样温度 |
-| `fake-claude.shell.work-dir` | `${user.dir}` | shell 工具默认工作目录 |
-| `fake-claude.shell.timeout-seconds` | `60` | 命令超时，取值 1–300 |
+| 配置项 | 默认值 | 说明                                                               |
+| --- | --- |--------------------------------------------------------------------|
+| `spring.ai.deepseek.api-key` | `${DEEPSEEK_API_KEY}` | API Key，走环境变量                                                |
+| `spring.ai.deepseek.chat.options.model` | `deepseek-flash` | 使用的模型                                                         | |
+| `fake-claude.shell.work-dir` | `${user.dir}` | shell 工具默认工作目录                                             |
+| `fake-claude.shell.timeout-seconds` | `60` | 命令超时，取值 1–300                                               |
 | `fake-claude.shell.charset` | `GBK` | 读取子进程输出用的编码，Windows 控制台默认 GBK，乱码时改成 `UTF-8` |
-| `fake-claude.fs.base-dir` | `${user.dir}` | 文件工具的写入根目录，越界一律拒绝 |
+| `fake-claude.fs.base-dir` | `${user.dir}` | 文件工具的写入根目录，越界一律拒绝                                 |
 
 ## 内置工具与安全策略
 
